@@ -6,7 +6,7 @@ const intervalo = setInterval(() => {
     const tagCantidadUsuarios = document.querySelector("[data-tid='roster-button-tile']");
     const cantidadUsuarios = !tagCantidadUsuarios ? 1 : parseInt(tagCantidadUsuarios.textContent, 10);
 
-    if (cantidadUsuarios < USUARIOS_MAXIMO) {
+    if (cantidadUsuarios < USUARIOS_MAXIMO && tagBotonExit) {
         tagBotonExit.click();
         clearInterval(intervalo);
     }
