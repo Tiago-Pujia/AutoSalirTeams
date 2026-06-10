@@ -7,18 +7,16 @@ Cierra automáticamente la llamada de Teams cuando comienzan a irse los particip
 3. Abre la consola del navegador (F12 o Ctrl+Shift+I).
 4. Copia y pega el contenido de `main.js` y presiona Enter.
 
-El script cierra la llamada cuando el número de usuarios baja de 15.
+El script cierra la llamada cuando el número de usuarios baja del umbral configurado en `main.js`.
 
 # ¿Cómo funciona?
-El script utiliza un intervalo para verificar periódicamente el número de usuarios en la llamada. Si el número de usuarios es menor que el umbral establecido, cierra la llamada.
+El script observa cambios en el contador de participantes usando un `MutationObserver` en el elemento de la lista de asistentes. Cuando el número de usuarios es menor que `USUARIOS_MAXIMO`, se hace clic en el botón de colgar y se detiene el observador.
 
 # ¿Como configurarlo?
-Ajustas las variables globales:
+Ajustas la variable global:
+
 ```js
-const USUARIOS_MAXIMO = 15; // Cantidad de usuarios maximos para irse
-const INTERVALO_MS = 1000; // En milisegundos
+const USUARIOS_MAXIMO = 13; // Cantidad de usuarios máxima para salir
 ```
 
-Ejemplo: Cada 1000 milisegundos verifica si el número de usuarios es menor a 15, si es así, cierra la llamada.
-
-
+Ejemplo: el script espera a que el total de usuarios sea menor a 13 y entonces cierra la llamada automáticamente.

@@ -1,13 +1,27 @@
-const USUARIOS_MAXIMO = 15; // Cantidad de usuarios maximos para irse
-const INTERVALO_MS = 1000; // En milisegundos
+// CONSTANTES
+const USUARIOS_MAXIMO = 13;
 
-const intervalo = setInterval(() => {
+
+// FUNCIONES
+const obtenerCantidadUsuarios = () => {
+    const tag = document.querySelector("[data-tid='roster-button-tile']");
+    return tag ? parseInt(tag.textContent, 10) : 1;
+};
+
+const verificarYSalir = () => {
     const tagBotonExit = document.querySelector("#hangup-button");
-    const tagCantidadUsuarios = document.querySelector("[data-tid='roster-button-tile']");
-    const cantidadUsuarios = !tagCantidadUsuarios ? 1 : parseInt(tagCantidadUsuarios.textContent, 10);
-
-    if (cantidadUsuarios < USUARIOS_MAXIMO && tagBotonExit) {
+    
+    if (obtenerCantidadUsuarios() < USUARIOS_MAXIMO && tagBotonExit) {
         tagBotonExit.click();
-        clearInterval(intervalo);
+        observer.disconnect();
     }
-}, INTERVALO_MS);
+};
+
+
+// MAIN
+const tagCantidadUsuarios = document.querySelector("[data-tid='roster-button-tile']");
+const observer = new MutationObserver(verificarYSalir); // Crear un observador para detectar cambios en la cantidad de usuarios
+
+if (tagCantidadUsuarios) {
+    observer.observe(tagCantidadUsuarios, { childList: true, subtree: true, characterData: true });
+}
